@@ -1,0 +1,57 @@
+@use '../../styles/colors.module' as *;
+@use '../../styles/breakpoints.module' as*;
+
+// .PaletteList{
+//     width: 100%;
+//     min-height: 100vh;
+//     height: 100%;
+//     display: flex;
+//     flex-direction: column;
+//     align-items: center;
+//     background-color: #394bad;
+// }
+
+.root{
+    margin-top: 5rem;
+    display: flex;
+    justify-content: center;
+   
+}
+
+.container{
+    padding: 1rem 2rem;
+    max-width: 80%;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-items: center;
+    @media(min-width:map-get($grid-breakpoints, md)){
+        max-width: map-get($grid-breakpoints, sm);
+        }
+    @media(min-width:map-get($grid-breakpoints, xl)){
+        max-width: map-get($grid-breakpoints, md);
+        }
+    @media(min-width:map-get($grid-breakpoints, xxl)){
+        max-width: map-get($grid-breakpoints, xl);
+        }
+
+}
+
+.miniPalettes{
+    height: fit-content;
+    box-sizing: border-box;
+    width: 100%;
+    margin-bottom: 2rem;
+    display: grid;
+    grid-gap: 60px;
+    grid-template-columns:  1fr;
+    @media(min-width:map-get($grid-breakpoints, md)){
+        grid-template-columns: repeat(2, 1fr);
+        }
+    @media(min-width:map-get($grid-breakpoints, xxl)){
+        grid-template-columns: repeat(3, 1fr);
+        }
+    
+}

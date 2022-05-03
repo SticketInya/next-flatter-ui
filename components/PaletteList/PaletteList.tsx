@@ -1,4 +1,7 @@
 import ColorPalette from '../../interfaces/ColorPaletteInterface';
+import MiniPalette from '../MiniPalette/MiniPalette';
+
+import styles from './PaletteList.module.scss';
 
 interface props {
     palettes: ColorPalette[];
@@ -6,12 +9,14 @@ interface props {
 
 export default function PaletteList({ palettes }: props) {
     return (
-        <div className='PaletteList'>
-            <ul>
-                {palettes.map((palette) => {
-                    return <li key={palette.id}>{palette.paletteName}</li>;
-                })}
-            </ul>
+        <div className={styles.root}>
+            <div className={styles.container}>
+                <div className={styles.miniPalettes}>
+                    {palettes.map((palette) => (
+                        <MiniPalette key={palette.id} palette={palette} />
+                    ))}
+                </div>
+            </div>
         </div>
     );
 }
