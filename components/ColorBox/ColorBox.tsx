@@ -1,14 +1,14 @@
 import { useRouter } from 'next/router';
 import { useEffect, useRef, useState } from 'react';
 import CopyToClipboard from 'react-copy-to-clipboard';
+import useToggleState from '../../hooks/useToggleState';
+import useDidMountEffect from '../../hooks/useDidMountEffect';
 
 //Material UI
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 
+//Styles
 import styles from './ColorBox.module.scss';
-import useTimeout from '../../hooks/useTimeout';
-import useToggleState from '../../hooks/useToggleState';
-import useDidMountEffect from '../../hooks/useDidMountEffect';
 
 interface props {
     color: string;
