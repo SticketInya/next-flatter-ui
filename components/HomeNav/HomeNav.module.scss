@@ -1,0 +1,45 @@
+@use '../../styles/colors.module' as *;
+@use '../../styles/breakpoints.module' as *;
+
+.root{
+    background-color: $background-nav--transparent ;
+    padding: 1rem 2rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    backdrop-filter: blur(40px);
+}
+
+.container{
+    width: 100%;
+    max-width: map-get($container-max-widths ,xl );
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+
+}
+
+.logo{
+    cursor: pointer;
+    margin: 0;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: $text--light;
+    &_accent{
+        color: $accent-primary;
+    }
+    @media (min-width:map-get($container-max-widths, md)) {
+        font-size: 2.25rem;
+    }
+}
+
+.create{
+    font-size: 1rem;
+    font-weight: 400;
+    color:$text--light;
+    text-decoration: underline;
+    @media (min-width:map-get($container-max-widths, md)) {
+        font-size: 1.25rem;
+    }
+}
