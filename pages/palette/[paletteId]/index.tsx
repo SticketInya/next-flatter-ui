@@ -1,5 +1,6 @@
 import type { NextPage, NextPageContext } from 'next';
 import { useContext, useState } from 'react';
+import ColorBox from '../../../components/ColorBox/ColorBox';
 import { ColorPalettesContext } from '../../../contexts/ColorPalettes.context';
 import ColorPalette from '../../../interfaces/ColorPaletteInterface';
 
@@ -22,18 +23,15 @@ const PalettePage: NextPage<Props> = ({ paletteId }) => {
     return (
         <div>
             <div className={styles.container}>
-                <ul>
-                    {palette?.colors?.map((color) => {
-                        return (
-                            <li
-                                key={color.name}
-                                style={{ backgroundColor: color.color }}
-                            >
-                                {color.name}
-                            </li>
-                        );
-                    })}
-                </ul>
+                {palette?.colors?.map((color) => {
+                    return (
+                        <ColorBox
+                            key={color.name}
+                            name={color.name}
+                            color={color.color}
+                        />
+                    );
+                })}
             </div>
         </div>
     );
