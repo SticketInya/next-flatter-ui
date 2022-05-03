@@ -1,3 +1,4 @@
+import { useRouter } from 'next/router';
 import ColorPalette from '../../interfaces/ColorPaletteInterface';
 
 import styles from './MiniPalette.module.scss';
@@ -9,8 +10,15 @@ interface props {
 export default function MiniPalette({
     palette: { paletteName, id, colors },
 }: props) {
+    const router = useRouter();
+
+    const handleClick = () => {
+        const path = router.asPath;
+        router.push(`${path}/palette/${id}`);
+    };
+
     return (
-        <div className={styles.root}>
+        <div className={styles.root} onClick={handleClick}>
             <div className={styles.container}>
                 <div className={styles.colors}>
                     {colors.map((color) => (
