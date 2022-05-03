@@ -1,0 +1,46 @@
+@use '../../styles/colors.module' as *;
+// @use '../../styles/breakpoints.module' as*;
+
+.root{
+    position: relative;
+    background-color: $background-element;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    border-radius: 5px;
+    border: 0;
+    width: 100%;
+    margin: 0;
+    cursor: pointer;
+
+    transition: all 200ms ease-out;
+}
+
+.container{
+    margin: 0.5rem;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    gap: 1rem;
+}
+
+.title{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: flex-end;
+    align-items: center;
+    font-size: 1rem;
+    margin:0;
+}
+
+.colors{
+    display: grid;
+    grid-template-columns: repeat(5 ,1fr);
+    grid-template-rows: repeat(4,1fr);
+    height: 150px;
+    width: 100%;
+    border-radius: 5px;
+    overflow: hidden;
+    background-color: $background-base;
+}
