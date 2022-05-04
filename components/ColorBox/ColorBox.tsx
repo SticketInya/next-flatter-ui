@@ -25,14 +25,12 @@ export default function ColorBox({
 }: props): JSX.Element {
     const router = useRouter();
     const [isCopied, setIsCopied] = useState(false);
-    const [timeout, toggleTimeout] = useToggleState(false);
     const isDark = false;
     const textColor = isDark ? styles.dark : styles.light;
     const isActive = isCopied ? styles.active : styles.hidden;
 
     const handleCopy = () => {
         setIsCopied(true);
-        toggleTimeout();
     };
 
     const handleMoreClick = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -41,10 +39,12 @@ export default function ColorBox({
     };
 
     useDidMountEffect(() => {
-        setTimeout(() => {
-            setIsCopied(false);
-        }, 1500);
-    }, [timeout]);
+        if (isCopied) {
+            setTimeout(() => {
+                setIsCopied(false);
+            }, 1500);
+        }
+    }, [isCopied]);
 
     return (
         <CopyToClipboard text={color} onCopy={handleCopy}>
