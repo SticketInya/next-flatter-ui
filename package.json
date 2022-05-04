@@ -16,9 +16,9 @@
     "chroma-js": "^2.4.2",
     "next": "12.1.6",
     "react": "18.1.0",
+    "react-colorful": "^5.5.1",
     "react-copy-to-clipboard": "^5.1.0",
     "react-dom": "18.1.0",
-    "react-material-ui-form-validator": "^3.0.0",
     "sass": "^1.51.0"
   },
   "devDependencies": {
@@ -28,9 +28,11 @@
     "@types/react": "18.0.8",
     "@types/react-copy-to-clipboard": "^5.0.2",
     "@types/react-dom": "18.0.3",
+    "@types/react-material-ui-form-validator": "^2.1.1",
     "eslint": "^8.14.0",
     "eslint-config-next": "12.1.6",
     "prettier": "^2.6.2",
+    "react-material-ui-form-validator": "^3.0.0",
     "typescript": "4.6.4"
   }
 }
