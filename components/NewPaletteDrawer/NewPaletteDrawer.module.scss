@@ -69,6 +69,11 @@
             &:active{
                 transform: scale(0.95);
             }
+
+            &:disabled{
+                background-color: gray;
+                cursor: not-allowed;
+            }
             }    
     }
 
@@ -121,6 +126,16 @@
                 border: 0;
                 border-radius: 5px;
                 padding: 1em 2em;
+
+                &:active{
+                    transform: scale(0.95);
+                }
+
+                &:disabled{
+                    background-color: gray !important;
+                    color: $text--dark;
+                    cursor: not-allowed;
+                }
             }
         }
     }
