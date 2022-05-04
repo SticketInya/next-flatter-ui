@@ -80,14 +80,19 @@ export default function NewPaletteDrawer({
                 '& .MuiDrawer-paper': {
                     width: drawerWidth,
                     boxSizing: 'border-box',
+                    backgroundColor: '#12121280',
                 },
             }}
             variant='persistent'
             anchor='left'
             open={open}
+            className={styles.root}
         >
             <DrawerHeader>
-                <IconButton onClick={handleDrawerToggle}>
+                <IconButton
+                    onClick={handleDrawerToggle}
+                    className={styles.close}
+                >
                     <ChevronLeftIcon />
                 </IconButton>
             </DrawerHeader>
@@ -106,16 +111,23 @@ export default function NewPaletteDrawer({
                     </button>
                 </div>
                 <div className={styles.color}>
-                    <HexColorPicker color={color} onChange={setColor} />
+                    <HexColorPicker
+                        color={color}
+                        onChange={setColor}
+                        className={styles.picker}
+                    />
                     <ValidatorForm
                         onSubmit={handleSubmit}
                         instantValidate={false}
+                        className={styles.form}
                     >
                         <TextValidator
+                            className={styles.textfield}
                             name={'NewColorName'}
                             label={'Color name'}
                             value={colorName}
                             onChange={handleInputChange}
+                            fullWidth
                             validators={[
                                 'required',
                                 'isColorNameUnique',

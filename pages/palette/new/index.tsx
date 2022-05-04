@@ -12,6 +12,7 @@ import styles from './NewPalettePage.module.scss';
 import NewPaletteDrawer from '../../../components/NewPaletteDrawer/NewPaletteDrawer';
 import NewPaletteNav from '../../../components/NewPaletteNav/NewPaletteNav';
 import { color } from '../../../interfaces/ColorPaletteInterface';
+import { CssBaseline } from '@mui/material';
 
 const NewPalettePage: NextPage = () => {
     const { allPalettes } = useContext(ColorPalettesContext);
@@ -62,6 +63,7 @@ const NewPalettePage: NextPage = () => {
         <div className={styles.root}>
             <div className={styles.ui}>
                 <Box sx={{ display: 'flex' }}>
+                    <CssBaseline />
                     <NewPaletteNav
                         open={open}
                         handleDrawerToggle={handleDrawerToggle}
