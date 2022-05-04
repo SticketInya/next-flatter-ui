@@ -4,8 +4,8 @@ import ColorBox from '../../../components/ColorBox/ColorBox';
 import PaletteNav from '../../../components/PaletteNav/PaletteNav';
 import { ColorFormatContext } from '../../../contexts/ColorFormat.context';
 import { ColorPalettesContext } from '../../../contexts/ColorPalettes.context';
-import generateShades from '../../../helpers/GenerateShades';
-import GetColorPaletteById from '../../../helpers/GetColorPaletteById';
+import generateShades from '../../../helpers/generateShades';
+import getColorPaletteById from '../../../helpers/getColorPaletteById';
 import { ColorPaletteShades } from '../../../interfaces/ColorPaletteInterface';
 
 import styles from './PalettePage.module.scss';
@@ -18,7 +18,7 @@ const PalettePage: NextPage<Props> = ({ paletteId }) => {
     const { allPalettes } = useContext(ColorPalettesContext);
     const { colorFormat } = useContext(ColorFormatContext);
     const [palette, setPalette] = useState<ColorPaletteShades>(
-        generateShades(GetColorPaletteById(paletteId, allPalettes)),
+        generateShades(getColorPaletteById(paletteId, allPalettes)),
     );
 
     return (
