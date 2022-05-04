@@ -9,6 +9,7 @@ import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 
 //Styles
 import styles from './ColorBox.module.scss';
+import getColorContrast from '../../helpers/getColorContrast';
 
 interface props {
     color: string;
@@ -25,8 +26,9 @@ export default function ColorBox({
 }: props): JSX.Element {
     const router = useRouter();
     const [isCopied, setIsCopied] = useState(false);
-    const isDark = false;
-    const textColor = isDark ? styles.dark : styles.light;
+    const textColor = getColorContrast(color, 'white')
+        ? styles.dark
+        : styles.light;
     const isActive = isCopied ? styles.active : styles.hidden;
 
     const handleCopy = () => {
@@ -54,10 +56,12 @@ export default function ColorBox({
                     style={{ backgroundColor: color }}
                 ></div>
                 <div className={`${styles.text_container} ${isActive}`}>
-                    <h2 className={styles.title}>copied!</h2>
-                    <h4 className={styles.title_color}>{color}</h4>
+                    <h2 className={`${styles.title} ${textColor}`}>copied!</h2>
+                    <h4 className={`${styles.title_color} ${textColor}`}>
+                        {color}
+                    </h4>
                 </div>
-                <span className={styles.cpy_btn}>Copy</span>
+                <span className={`${styles.cpy_btn} ${textColor}`}>Copy</span>
                 <div className={styles.btn_container}>
                     <span className={`${styles.color_name} ${textColor}`}>
                         {name}

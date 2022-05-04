@@ -49,15 +49,28 @@
 
         .title{
             font-size: 5rem;
-            color: $text--light;
-            text-shadow: 1px 2px rgb(0, 0, 0);
             text-transform: uppercase;
+            &.light{
+                color: $text--light;
+                text-shadow: 1px 2px rgb(0, 0, 0);
+            }
+
+            &.dark{
+                color: $text--dark;
+                text-shadow: 1px 2px rgb(255, 255, 255);
+            }
         }
 
         .title_color{
             font-size: 2rem;
-            color: $text--light;
             font-weight: 300;
+            &.light{
+                color: $text--light;
+            }
+
+            &.dark{
+                color: $text--dark;
+            }
         }
     }
 
@@ -70,9 +83,18 @@
         border-radius: 5px;
         padding: 0.5em 1em;
         text-transform: uppercase;
+
+        &.light{
+            color: $text--light;
+            border: solid 2px $background-element-light--transparent;
+        }
+
+        &.dark{
+            color: $text--dark;
+            border: solid 2px $background-element--transparent;
+        }
         
-        border: solid 2px $background-element-light--transparent;
-        color: $text--light;
+        
         opacity: 0;
         transition: opacity 200ms ease-out;
     }
