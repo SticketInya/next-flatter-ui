@@ -30,9 +30,16 @@ const PalettePage: NextPage<Props> = ({ paletteId }) => {
         return generateShades(rawPalette);
     }
 
+    const changeColorFormat = (newFormat: keyof colorFormat) => {
+        setFormat(newFormat);
+    };
+
     return (
         <div className={styles.root}>
-            <PaletteNav paletteName={palette?.paletteName as string} />
+            <PaletteNav
+                paletteName={palette?.paletteName as string}
+                changeFormat={changeColorFormat}
+            />
             <div className={styles.container}>
                 {palette.colors[500].map((color) => {
                     if (typeof color === undefined) {
