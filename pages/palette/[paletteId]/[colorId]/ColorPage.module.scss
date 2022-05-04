@@ -1,0 +1,21 @@
+@use '../../../../styles/breakpoints.module' as *;
+
+.container{
+    width: 100%;
+    min-height: 95vh;
+    display: grid;
+    grid-template-columns: 1fr;
+    @media (min-width:map-get($grid-breakpoints, sm)) {
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-rows: repeat(5, 1fr);
+    }
+    @media (min-width:map-get($grid-breakpoints, md)) {
+        grid-template-columns: repeat(5, 1fr);
+        grid-template-rows: repeat(2, 1fr);
+    }
+    @media (min-width:map-get($grid-breakpoints, xl)) {
+        grid-template-columns: repeat(9, 1fr);
+        grid-template-rows: 1fr;
+    }
+    overflow: hidden;
+}
