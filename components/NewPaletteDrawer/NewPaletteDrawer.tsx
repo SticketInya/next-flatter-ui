@@ -13,16 +13,18 @@ import styles from './NewPaletteDrawer.module.scss';
 
 interface props {
     open: boolean;
+    allColors: color[];
     handleDrawerToggle: () => void;
     addColor: (newColor: { name: string; color: string }) => void;
-    allColors: color[];
+    clearPalette: () => void;
 }
 
 export default function NewPaletteDrawer({
     open,
+    allColors,
     handleDrawerToggle,
     addColor,
-    allColors,
+    clearPalette,
 }: props) {
     const [color, setColor] = useState('#aabbcc');
     const [colorName, setColorName] = useState<string>('');
@@ -88,7 +90,9 @@ export default function NewPaletteDrawer({
             <div className={styles.content}>
                 <h3 className={styles.title}>Add Your own Colors!</h3>
                 <div className={styles.container}>
-                    <button className={styles.clear}>Clear Palette</button>
+                    <button className={styles.clear} onClick={clearPalette}>
+                        Clear Palette
+                    </button>
                     <button className={styles.random}>Random Color</button>
                 </div>
                 <div className={styles.color}>

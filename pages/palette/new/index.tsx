@@ -32,6 +32,10 @@ const NewPalettePage: NextPage = () => {
         setPalette({ ...palette, colors: [...palette.colors, newColor] });
     };
 
+    const clearPalette = () => {
+        setPalette({ ...palette, colors: [] });
+    };
+
     return (
         <div className={styles.root}>
             <div className={styles.ui}>
@@ -45,6 +49,7 @@ const NewPalettePage: NextPage = () => {
                         handleDrawerToggle={handleDrawerToggle}
                         addColor={addColor}
                         allColors={palette.colors}
+                        clearPalette={clearPalette}
                     />
                     <Main open={open}>
                         <DrawerHeader />
