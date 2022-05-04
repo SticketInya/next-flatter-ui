@@ -28,6 +28,7 @@
         line-height: 1.25em;
         font-weight: 600;
         color: $text--light;
+        text-transform: capitalize;
         @media (max-width:map-get($grid-breakpoints, sm)) {
             display: none;
         }
