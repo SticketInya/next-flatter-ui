@@ -13,7 +13,7 @@ export default function HomeNav(): JSX.Element {
                         <span className={styles.logo_accent}>Colors</span>
                     </h4>
                 </Link>
-                <Link href='#'>
+                <Link href='/palette/new'>
                     <a className={styles.create}>Create Palette</a>
                 </Link>
             </div>
