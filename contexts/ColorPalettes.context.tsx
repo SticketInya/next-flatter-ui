@@ -1,4 +1,3 @@
-import { palette } from '@mui/system';
 import {
     createContext,
     ReactNode,
