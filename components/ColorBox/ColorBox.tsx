@@ -13,9 +13,10 @@ import styles from './ColorBox.module.scss';
 interface props {
     color: string;
     name: string;
+    id: string;
 }
 
-export default function ColorBox({ name, color }: props): JSX.Element {
+export default function ColorBox({ name, color, id }: props): JSX.Element {
     const router = useRouter();
     const [isCopied, setIsCopied] = useState(false);
     const [timeout, toggleTimeout] = useToggleState(false);
@@ -30,7 +31,7 @@ export default function ColorBox({ name, color }: props): JSX.Element {
 
     const handleMoreClick = (e: React.MouseEvent<HTMLButtonElement>) => {
         e.stopPropagation();
-        router.push(`${router.asPath}/${name}`);
+        router.push(`${router.asPath}/${id}`);
     };
 
     useDidMountEffect(() => {
