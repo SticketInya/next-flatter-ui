@@ -5,10 +5,7 @@ import PaletteNav from '../../../components/PaletteNav/PaletteNav';
 import { ColorFormatContext } from '../../../contexts/ColorFormat.context';
 import { ColorPalettesContext } from '../../../contexts/ColorPalettes.context';
 import generateShades from '../../../helpers/GenerateShades';
-import ColorPalette, {
-    colorFormat,
-    ColorPaletteShades,
-} from '../../../interfaces/ColorPaletteInterface';
+import { ColorPaletteShades } from '../../../interfaces/ColorPaletteInterface';
 
 import styles from './PalettePage.module.scss';
 

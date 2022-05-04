@@ -12,14 +12,13 @@ import { ColorFormatContext } from '../../contexts/ColorFormat.context';
 
 interface props {
     paletteName: string;
-    changeFormat: (newFormat: keyof colorFormat) => void;
 }
 
 export default function PaletteNav({
     paletteName = 'Palette',
 }: props): JSX.Element {
     const router = useRouter();
-    const { colorFormat, setColorFormat } = useContext(ColorFormatContext);
+    const { setColorFormat } = useContext(ColorFormatContext);
 
     const handleBack = () => {
         router.back();
