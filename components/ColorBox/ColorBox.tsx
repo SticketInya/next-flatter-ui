@@ -14,9 +14,15 @@ interface props {
     color: string;
     name: string;
     id: string;
+    hasMore: boolean;
 }
 
-export default function ColorBox({ name, color, id }: props): JSX.Element {
+export default function ColorBox({
+    name,
+    color,
+    id,
+    hasMore = true,
+}: props): JSX.Element {
     const router = useRouter();
     const [isCopied, setIsCopied] = useState(false);
     const [timeout, toggleTimeout] = useToggleState(false);
@@ -56,12 +62,14 @@ export default function ColorBox({ name, color, id }: props): JSX.Element {
                     <span className={`${styles.color_name} ${textColor}`}>
                         {name}
                     </span>
-                    <button
-                        className={styles.color_more}
-                        onClick={handleMoreClick}
-                    >
-                        <ChevronRightIcon />
-                    </button>
+                    {hasMore && (
+                        <button
+                            className={styles.color_more}
+                            onClick={handleMoreClick}
+                        >
+                            <ChevronRightIcon />
+                        </button>
+                    )}
                 </div>
             </div>
         </CopyToClipboard>

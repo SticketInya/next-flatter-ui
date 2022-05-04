@@ -5,6 +5,7 @@ import PaletteNav from '../../../components/PaletteNav/PaletteNav';
 import { ColorFormatContext } from '../../../contexts/ColorFormat.context';
 import { ColorPalettesContext } from '../../../contexts/ColorPalettes.context';
 import generateShades from '../../../helpers/GenerateShades';
+import GetColorPaletteById from '../../../helpers/GetColorPaletteById';
 import { ColorPaletteShades } from '../../../interfaces/ColorPaletteInterface';
 
 import styles from './PalettePage.module.scss';
@@ -17,16 +18,8 @@ const PalettePage: NextPage<Props> = ({ paletteId }) => {
     const { allPalettes } = useContext(ColorPalettesContext);
     const { colorFormat } = useContext(ColorFormatContext);
     const [palette, setPalette] = useState<ColorPaletteShades>(
-        getPalette(paletteId),
+        generateShades(GetColorPaletteById(paletteId, allPalettes)),
     );
-
-    function getPalette(paletteId: string): ColorPaletteShades {
-        const rawPalette =
-            allPalettes.find((palette) => palette.id === paletteId) ||
-            allPalettes[0];
-
-        return generateShades(rawPalette);
-    }
 
     return (
         <div className={styles.root}>
@@ -42,6 +35,7 @@ const PalettePage: NextPage<Props> = ({ paletteId }) => {
                             name={color.name}
                             color={color[colorFormat]}
                             id={color.id}
+                            hasMore={true}
                         />
                     );
                 })}
