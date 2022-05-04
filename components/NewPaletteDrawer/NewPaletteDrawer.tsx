@@ -13,18 +13,22 @@ import styles from './NewPaletteDrawer.module.scss';
 
 interface props {
     open: boolean;
+    isPaletteFull: boolean;
     allColors: color[];
     handleDrawerToggle: () => void;
     addColor: (newColor: { name: string; color: string }) => void;
     clearPalette: () => void;
+    addRandomColor: () => void;
 }
 
 export default function NewPaletteDrawer({
     open,
+    isPaletteFull,
     allColors,
     handleDrawerToggle,
     addColor,
     clearPalette,
+    addRandomColor,
 }: props) {
     const [color, setColor] = useState('#aabbcc');
     const [colorName, setColorName] = useState<string>('');
@@ -93,7 +97,13 @@ export default function NewPaletteDrawer({
                     <button className={styles.clear} onClick={clearPalette}>
                         Clear Palette
                     </button>
-                    <button className={styles.random}>Random Color</button>
+                    <button
+                        className={styles.random}
+                        onClick={addRandomColor}
+                        disabled={isPaletteFull}
+                    >
+                        Random Color
+                    </button>
                 </div>
                 <div className={styles.color}>
                     <HexColorPicker color={color} onChange={setColor} />
@@ -120,6 +130,7 @@ export default function NewPaletteDrawer({
                         <button
                             type='submit'
                             className={styles.add}
+                            disabled={isPaletteFull}
                             style={{ backgroundColor: color }}
                         >
                             Add color

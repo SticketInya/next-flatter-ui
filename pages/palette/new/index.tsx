@@ -11,11 +11,13 @@ import { Main, DrawerHeader } from '../../../helpers/muiDrawerStyles';
 import styles from './NewPalettePage.module.scss';
 import NewPaletteDrawer from '../../../components/NewPaletteDrawer/NewPaletteDrawer';
 import NewPaletteNav from '../../../components/NewPaletteNav/NewPaletteNav';
+import { color } from '../../../interfaces/ColorPaletteInterface';
 
 const NewPalettePage: NextPage = () => {
     const { allPalettes } = useContext(ColorPalettesContext);
     const [palette, setPalette] = useState(allPalettes[0]);
     const [open, toggleOpen] = useToggleState(true);
+    const isPaletteFull = palette.colors.length >= 20;
 
     const handleDrawerToggle = () => {
         toggleOpen();
@@ -36,6 +38,26 @@ const NewPalettePage: NextPage = () => {
         setPalette({ ...palette, colors: [] });
     };
 
+    const getRandomColor = () => {
+        const randPalette = Math.floor(Math.random() * allPalettes.length);
+        const randColor = Math.floor(
+            Math.random() * allPalettes[randPalette].colors.length,
+        );
+        return allPalettes[randPalette].colors[randColor];
+    };
+
+    const addRandomColor = () => {
+        let randomColor: color;
+        let isDuplicate = true;
+        do {
+            randomColor = getRandomColor();
+            isDuplicate = palette.colors.some(
+                (color) => color.name === randomColor.name,
+            );
+        } while (isDuplicate);
+        setPalette({ ...palette, colors: [...palette.colors, randomColor] });
+    };
+
     return (
         <div className={styles.root}>
             <div className={styles.ui}>
@@ -46,10 +68,12 @@ const NewPalettePage: NextPage = () => {
                     />
                     <NewPaletteDrawer
                         open={open}
+                        isPaletteFull={isPaletteFull}
                         handleDrawerToggle={handleDrawerToggle}
                         addColor={addColor}
                         allColors={palette.colors}
                         clearPalette={clearPalette}
+                        addRandomColor={addRandomColor}
                     />
                     <Main open={open}>
                         <DrawerHeader />
