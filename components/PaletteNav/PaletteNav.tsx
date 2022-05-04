@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { colorFormat } from '../../interfaces/ColorPaletteInterface';
 
 //Material UI
@@ -8,6 +8,7 @@ import Select, { SelectChangeEvent } from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 //Styles
 import styles from './PaletteNav.module.scss';
+import { ColorFormatContext } from '../../contexts/ColorFormat.context';
 
 interface props {
     paletteName: string;
@@ -16,9 +17,9 @@ interface props {
 
 export default function PaletteNav({
     paletteName = 'Palette',
-    changeFormat,
 }: props): JSX.Element {
     const router = useRouter();
+    const { colorFormat, setColorFormat } = useContext(ColorFormatContext);
 
     const handleBack = () => {
         router.back();
@@ -26,7 +27,7 @@ export default function PaletteNav({
 
     const handleSelectChange = (e: SelectChangeEvent<string>) => {
         const newFormat = e.target.value.toLowerCase() as keyof colorFormat;
-        changeFormat(newFormat);
+        setColorFormat(newFormat);
     };
 
     return (

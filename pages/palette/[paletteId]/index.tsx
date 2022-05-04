@@ -2,6 +2,7 @@ import type { NextPage, NextPageContext } from 'next';
 import { useContext, useState } from 'react';
 import ColorBox from '../../../components/ColorBox/ColorBox';
 import PaletteNav from '../../../components/PaletteNav/PaletteNav';
+import { ColorFormatContext } from '../../../contexts/ColorFormat.context';
 import { ColorPalettesContext } from '../../../contexts/ColorPalettes.context';
 import generateShades from '../../../helpers/GenerateShades';
 import ColorPalette, {
@@ -17,7 +18,7 @@ interface Props {
 
 const PalettePage: NextPage<Props> = ({ paletteId }) => {
     const { allPalettes } = useContext(ColorPalettesContext);
-    const [format, setFormat] = useState<keyof colorFormat>('hex');
+    const { colorFormat } = useContext(ColorFormatContext);
     const [palette, setPalette] = useState<ColorPaletteShades>(
         getPalette(paletteId),
     );
@@ -30,16 +31,9 @@ const PalettePage: NextPage<Props> = ({ paletteId }) => {
         return generateShades(rawPalette);
     }
 
-    const changeColorFormat = (newFormat: keyof colorFormat) => {
-        setFormat(newFormat);
-    };
-
     return (
         <div className={styles.root}>
-            <PaletteNav
-                paletteName={palette?.paletteName as string}
-                changeFormat={changeColorFormat}
-            />
+            <PaletteNav paletteName={palette?.paletteName as string} />
             <div className={styles.container}>
                 {palette.colors[500].map((color) => {
                     if (typeof color === undefined) {
@@ -49,7 +43,8 @@ const PalettePage: NextPage<Props> = ({ paletteId }) => {
                         <ColorBox
                             key={color.name}
                             name={color.name}
-                            color={color[format]}
+                            color={color[colorFormat]}
+                            id={color.id}
                         />
                     );
                 })}
