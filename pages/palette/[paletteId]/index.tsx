@@ -1,6 +1,7 @@
 import type { NextPage, NextPageContext } from 'next';
 import { useContext, useState } from 'react';
 import ColorBox from '../../../components/ColorBox/ColorBox';
+import PaletteNav from '../../../components/PaletteNav/PaletteNav';
 import { ColorPalettesContext } from '../../../contexts/ColorPalettes.context';
 import ColorPalette from '../../../interfaces/ColorPaletteInterface';
 
@@ -21,7 +22,8 @@ const PalettePage: NextPage<Props> = ({ paletteId }) => {
     }
 
     return (
-        <div>
+        <div className={styles.root}>
+            <PaletteNav paletteName={palette?.paletteName as string} />
             <div className={styles.container}>
                 {palette?.colors?.map((color) => {
                     return (
