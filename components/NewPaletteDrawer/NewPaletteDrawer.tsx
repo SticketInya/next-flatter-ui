@@ -1,5 +1,7 @@
+import { ChangeEvent, FormEvent, useEffect, useState } from 'react';
 import { HexColorPicker } from 'react-colorful';
 import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator';
+import { color } from '../../interfaces/ColorPaletteInterface';
 
 //Material UI
 import Drawer from '@mui/material/Drawer';
@@ -8,19 +10,19 @@ import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import { DrawerHeader, drawerWidth } from '../../helpers/muiDrawerStyles';
 
 import styles from './NewPaletteDrawer.module.scss';
-import { ChangeEvent, FormEvent, useState } from 'react';
-import { TextField } from '@mui/material';
 
 interface props {
     open: boolean;
     handleDrawerToggle: () => void;
     addColor: (newColor: { name: string; color: string }) => void;
+    allColors: color[];
 }
 
 export default function NewPaletteDrawer({
     open,
     handleDrawerToggle,
     addColor,
+    allColors,
 }: props) {
     const [color, setColor] = useState('#aabbcc');
     const [colorName, setColorName] = useState<string>('');
@@ -31,10 +33,38 @@ export default function NewPaletteDrawer({
         setColorName(e.target.value);
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = (e: FormEvent<Element>) => {
         e.preventDefault();
         addColor({ name: colorName, color });
     };
+
+    useEffect(() => {
+        // @ts-ignore: Unreachable code error
+        if (!ValidatorForm.hasValidationRule('isColorNameUnique')) {
+            ValidatorForm.addValidationRule('isColorNameUnique', (value) => {
+                return allColors.every((color) => {
+                    return color.name.toLowerCase() !== value.toLowerCase();
+                });
+            });
+        }
+        // @ts-ignore: Unreachable code error
+        if (!ValidatorForm.hasValidationRule('isColorUnique')) {
+            ValidatorForm.addValidationRule('isColorUnique', (_value) => {
+                return allColors.every((c) => c.color !== color);
+            });
+        }
+
+        return function cleanCustomRules() {
+            // @ts-ignore: Unreachable code error
+            if (ValidatorForm.hasValidationRule('isColorNameUnique')) {
+                ValidatorForm.removeValidationRule('isColorNameUnique');
+            }
+            // @ts-ignore: Unreachable code error
+            if (ValidatorForm.hasValidationRule('isColorUnique')) {
+                ValidatorForm.removeValidationRule('isColorUnique');
+            }
+        };
+    });
 
     return (
         <Drawer
@@ -62,15 +92,26 @@ export default function NewPaletteDrawer({
                     <button className={styles.random}>Random Color</button>
                 </div>
                 <div className={styles.color}>
-                    <ValidatorForm onSubmit={handleSubmit}>
-                        <HexColorPicker color={color} onChange={setColor} />
+                    <HexColorPicker color={color} onChange={setColor} />
+                    <ValidatorForm
+                        onSubmit={handleSubmit}
+                        instantValidate={false}
+                    >
                         <TextValidator
                             name={'NewColorName'}
                             label={'Color name'}
                             value={colorName}
                             onChange={handleInputChange}
-                            validators={['required']}
-                            errorMessages={['This field is required']}
+                            validators={[
+                                'required',
+                                'isColorNameUnique',
+                                'isColorUnique',
+                            ]}
+                            errorMessages={[
+                                'This field is required',
+                                'Color name must be unique',
+                                'This color is already used',
+                            ]}
                         />
                         <button
                             type='submit'
@@ -85,3 +126,5 @@ export default function NewPaletteDrawer({
         </Drawer>
     );
 }
+
+// static hasValidationRule (name:string):boolean;

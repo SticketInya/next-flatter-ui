@@ -15,7 +15,7 @@ import NewPaletteNav from '../../../components/NewPaletteNav/NewPaletteNav';
 const NewPalettePage: NextPage = () => {
     const { allPalettes } = useContext(ColorPalettesContext);
     const [palette, setPalette] = useState(allPalettes[0]);
-    const [open, toggleOpen] = useToggleState(false);
+    const [open, toggleOpen] = useToggleState(true);
 
     const handleDrawerToggle = () => {
         toggleOpen();
@@ -44,6 +44,7 @@ const NewPalettePage: NextPage = () => {
                         open={open}
                         handleDrawerToggle={handleDrawerToggle}
                         addColor={addColor}
+                        allColors={palette.colors}
                     />
                     <Main open={open}>
                         <DrawerHeader />
