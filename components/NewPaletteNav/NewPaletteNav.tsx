@@ -10,9 +10,14 @@ import { useRouter } from 'next/router';
 interface props {
     open: boolean;
     handleDrawerToggle: () => void;
+    toggleDialogOpen: () => void;
 }
 
-export default function NewPaletteNav({ open, handleDrawerToggle }: props) {
+export default function NewPaletteNav({
+    open,
+    handleDrawerToggle,
+    toggleDialogOpen,
+}: props) {
     const router = useRouter();
 
     const handleBack = () => {
@@ -41,7 +46,12 @@ export default function NewPaletteNav({ open, handleDrawerToggle }: props) {
                         Create Your Palette
                     </Typography>
                     <div className={styles.btns}>
-                        <button className={styles.save}>Save</button>
+                        <button
+                            className={styles.save}
+                            onClick={toggleDialogOpen}
+                        >
+                            Save
+                        </button>
                         <button className={styles.back} onClick={handleBack}>
                             Back
                         </button>
