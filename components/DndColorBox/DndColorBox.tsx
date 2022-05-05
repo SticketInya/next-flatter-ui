@@ -1,22 +1,23 @@
 //Material UI
 import DeleteIcon from '@mui/icons-material/Delete';
+import { Dispatch } from 'react';
+import { PaletteAction } from '../../interfaces/NewPaletteReducerInterface';
 
 import styles from './DndColorBox.module.scss';
 
 interface props {
     color: string;
     name: string;
-    removeColor: (name: string) => void;
+    dispatchPalette: Dispatch<PaletteAction>;
 }
 
 export default function DndColorBox({
     name,
     color,
-    removeColor,
+    dispatchPalette,
 }: props): JSX.Element {
     const handleRemove = () => {
-        console.log(`Removing ${name}`);
-        removeColor(name);
+        dispatchPalette({ type: 'REMOVE', payload: { name, color } });
     };
     return (
         <div className={styles.root} style={{ backgroundColor: color }}>

@@ -1,11 +1,14 @@
 import { NextPage } from 'next';
-import { FormEvent, useContext, useState } from 'react';
+import { FormEvent, useContext, useReducer } from 'react';
 import DndColorBox from '../../../components/DndColorBox/DndColorBox';
 import { ColorPalettesContext } from '../../../contexts/ColorPalettes.context';
 import NewPaletteDrawer from '../../../components/NewPaletteDrawer/NewPaletteDrawer';
 import NewPaletteNav from '../../../components/NewPaletteNav/NewPaletteNav';
 import { color } from '../../../interfaces/ColorPaletteInterface';
 import useFormInputState from '../../../hooks/useFormInputState';
+import NewPaletteDialog from '../../../components/NewPaletteDialog/NewPaletteDialog';
+import { useRouter } from 'next/router';
+import newPaletteReducer from '../../../reducers/newPalette.reducer';
 
 //Material UI
 import Box from '@mui/material/Box';
@@ -14,33 +17,19 @@ import { Main, DrawerHeader } from '../../../helpers/muiDrawerStyles';
 import { CssBaseline } from '@mui/material';
 
 import styles from './NewPalettePage.module.scss';
-import NewPaletteDialog from '../../../components/NewPaletteDialog/NewPaletteDialog';
-import { useRouter } from 'next/router';
 
 const NewPalettePage: NextPage = () => {
     const router = useRouter();
     const { allPalettes, addColorPalette, getRandomColor } =
         useContext(ColorPalettesContext);
-    const [palette, setPalette] = useState(allPalettes[0]);
+    const [palette, dispatchPalette] = useReducer(
+        newPaletteReducer,
+        allPalettes[0],
+    );
     const [drawerOpen, toggleDrawerOpen] = useToggleState(true);
     const [dialogOpen, toggleDialogOpen] = useToggleState(false);
     const [paletteName, updatePaletteName] = useFormInputState('');
     const isPaletteFull = palette.colors.length >= 20;
-
-    const removeColor = (name: string) => {
-        setPalette({
-            ...palette,
-            colors: palette.colors.filter((color) => color.name !== name),
-        });
-    };
-
-    const addColor = (newColor: { name: string; color: string }) => {
-        setPalette({ ...palette, colors: [...palette.colors, newColor] });
-    };
-
-    const clearPalette = () => {
-        setPalette({ ...palette, colors: [] });
-    };
 
     const addRandomColor = () => {
         let randomColor: color;
@@ -51,7 +40,7 @@ const NewPalettePage: NextPage = () => {
                 (color) => color.name === randomColor.name,
             );
         } while (isDuplicate);
-        setPalette({ ...palette, colors: [...palette.colors, randomColor] });
+        dispatchPalette({ type: 'ADD', payload: randomColor });
     };
 
     const handlePaletteSave = (e: FormEvent<Element>) => {
@@ -79,9 +68,8 @@ const NewPalettePage: NextPage = () => {
                         open={drawerOpen}
                         isPaletteFull={isPaletteFull}
                         handleDrawerToggle={toggleDrawerOpen}
-                        addColor={addColor}
+                        dispatchPalette={dispatchPalette}
                         allColors={palette.colors}
-                        clearPalette={clearPalette}
                         addRandomColor={addRandomColor}
                     />
                     <Main open={drawerOpen}>
@@ -93,7 +81,7 @@ const NewPalettePage: NextPage = () => {
                                         key={color.name}
                                         name={color.name}
                                         color={color.color}
-                                        removeColor={removeColor}
+                                        dispatchPalette={dispatchPalette}
                                     />
                                 );
                             })}

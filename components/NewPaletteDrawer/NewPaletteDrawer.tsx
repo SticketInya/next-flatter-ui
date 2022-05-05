@@ -1,7 +1,9 @@
-import { ChangeEvent, FormEvent, useEffect, useState } from 'react';
+import { ChangeEvent, Dispatch, FormEvent, useEffect, useState } from 'react';
 import { HexColorPicker } from 'react-colorful';
 import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator';
 import { color } from '../../interfaces/ColorPaletteInterface';
+import useFormInputState from '../../hooks/useFormInputState';
+import { PaletteAction } from '../../interfaces/NewPaletteReducerInterface';
 
 //Material UI
 import Drawer from '@mui/material/Drawer';
@@ -10,15 +12,13 @@ import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import { DrawerHeader, drawerWidth } from '../../helpers/muiDrawerStyles';
 
 import styles from './NewPaletteDrawer.module.scss';
-import useFormInputState from '../../hooks/useFormInputState';
 
 interface props {
     open: boolean;
     isPaletteFull: boolean;
     allColors: color[];
     handleDrawerToggle: () => void;
-    addColor: (newColor: { name: string; color: string }) => void;
-    clearPalette: () => void;
+    dispatchPalette: Dispatch<PaletteAction>;
     addRandomColor: () => void;
 }
 
@@ -27,8 +27,7 @@ export default function NewPaletteDrawer({
     isPaletteFull,
     allColors,
     handleDrawerToggle,
-    addColor,
-    clearPalette,
+    dispatchPalette,
     addRandomColor,
 }: props) {
     const [color, setColor] = useState('#aabbcc');
@@ -36,7 +35,11 @@ export default function NewPaletteDrawer({
 
     const handleSubmit = (e: FormEvent<Element>) => {
         e.preventDefault();
-        addColor({ name: colorName, color });
+        dispatchPalette({ type: 'ADD', payload: { name: colorName, color } });
+    };
+
+    const handleClear = () => {
+        dispatchPalette({ type: 'CLEAR', payload: {} as color });
     };
 
     useEffect(() => {
@@ -94,7 +97,7 @@ export default function NewPaletteDrawer({
             <div className={styles.content}>
                 <h3 className={styles.title}>Add Your own Colors!</h3>
                 <div className={styles.container}>
-                    <button className={styles.clear} onClick={clearPalette}>
+                    <button className={styles.clear} onClick={handleClear}>
                         Clear Palette
                     </button>
                     <button
