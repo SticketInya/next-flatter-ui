@@ -1,0 +1,72 @@
+@use '../../styles/colors.module' as*;
+@use '../../styles/breakpoints.module' as*;
+
+.appbar{
+    background-color: $background-nav--transparent;
+
+    div{
+        font-family: 'Inter';
+    }
+    
+
+    svg{
+        color: $accent-primary;
+    }
+}
+
+.content{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+
+    .btns{
+        display: flex;
+        flex-direction: row;
+        gap: 1rem;
+
+        .save{
+            background-color: $accent-primary;
+            color: $text--dark;
+            border: 0;
+            border-radius: 5px;
+            padding: 0.5em 1.5em;
+            font-size: 1rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 50ms ease-in-out;
+
+            &:hover,:focus{
+                background-color: darken($color: $accent-primary, $amount: 10);
+            }
+
+            &:active{
+                transform: scale(0.95);
+            }
+
+        }
+
+        .back{
+            background-color: $background-element;
+            color: $text--light;
+            border: 0;
+            border-radius: 5px;
+            padding: 1rem 1.5rem;
+            font-size: 1rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 50ms ease-in-out;
+
+            &:hover,:focus{
+                background-color: lighten($color: $background-element, $amount: 10);
+            }
+
+            &:active{
+                transform: scale(0.95);
+            }
+        }
+    }
+}
