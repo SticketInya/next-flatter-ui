@@ -10,6 +10,7 @@ import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import { DrawerHeader, drawerWidth } from '../../helpers/muiDrawerStyles';
 
 import styles from './NewPaletteDrawer.module.scss';
+import useFormInputState from '../../hooks/useFormInputState';
 
 interface props {
     open: boolean;
@@ -31,13 +32,7 @@ export default function NewPaletteDrawer({
     addRandomColor,
 }: props) {
     const [color, setColor] = useState('#aabbcc');
-    const [colorName, setColorName] = useState<string>('');
-
-    const handleInputChange = (
-        e: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>,
-    ) => {
-        setColorName(e.target.value);
-    };
+    const [colorName, updateColorName] = useFormInputState('');
 
     const handleSubmit = (e: FormEvent<Element>) => {
         e.preventDefault();
@@ -126,7 +121,7 @@ export default function NewPaletteDrawer({
                             name={'NewColorName'}
                             label={'Color name'}
                             value={colorName}
-                            onChange={handleInputChange}
+                            onChange={updateColorName}
                             fullWidth
                             validators={[
                                 'required',
