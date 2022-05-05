@@ -13,7 +13,7 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 20px;
+    gap: 1rem;
 
     .title{
         font-family: 'Inter';
@@ -28,14 +28,16 @@
         flex-direction: row;
         align-items: center;
         justify-content: space-between;
+        font-size: 0.875rem;
+        gap: 1rem;
 
         .clear{
             background-color: $background-element;
             color: $text--light;
             border: 0;
             border-radius: 5px;
-            padding: 1rem 1.5rem;
-            font-size: 1rem;
+            padding: 1em 2em;
+            // font-size: 1rem;
             font-weight: 600;
             text-transform: uppercase;
             cursor: pointer;
@@ -55,8 +57,8 @@
             color: $text--dark;
             border: 0;
             border-radius: 5px;
-            padding: 1rem 1.5rem;
-            font-size: 1rem;
+            padding: 1em 2em;
+            // font-size: 1rem;
             font-weight: 600;
             text-transform: uppercase;
             cursor: pointer;
