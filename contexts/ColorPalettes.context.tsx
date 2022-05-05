@@ -6,6 +6,7 @@ import {
     SetStateAction,
 } from 'react';
 import defaultPalettes from '../constants/defaultPalettes';
+import useLocalStorageState from '../hooks/useLocalStorageState';
 import ColorPalette, { color } from '../interfaces/ColorPaletteInterface';
 
 const defCol = { name: '', color: '' };
@@ -31,6 +32,12 @@ export const ColorPalettesContext = createContext<DefaultContextValue>({
 export default function ColorPalettesProvider({ children }: props) {
     const [allPalettes, setAllPalettes] =
         useState<ColorPalette[]>(defaultPalettes);
+
+    //TODO - Render PageSkeleton before localStorage access, to prevent hydration error
+    // const [allPalettes, setAllPalettes] = useLocalStorageState(
+    //     'colors',
+    //     defaultPalettes,
+    // );
 
     const addColorPalette = (newPalette: ColorPalette) => {
         setAllPalettes([...allPalettes, newPalette]);
