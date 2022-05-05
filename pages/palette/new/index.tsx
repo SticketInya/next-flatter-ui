@@ -19,7 +19,8 @@ import { useRouter } from 'next/router';
 
 const NewPalettePage: NextPage = () => {
     const router = useRouter();
-    const { allPalettes, addColorPalette } = useContext(ColorPalettesContext);
+    const { allPalettes, addColorPalette, getRandomColor } =
+        useContext(ColorPalettesContext);
     const [palette, setPalette] = useState(allPalettes[0]);
     const [drawerOpen, toggleDrawerOpen] = useToggleState(true);
     const [dialogOpen, toggleDialogOpen] = useToggleState(false);
@@ -39,14 +40,6 @@ const NewPalettePage: NextPage = () => {
 
     const clearPalette = () => {
         setPalette({ ...palette, colors: [] });
-    };
-
-    const getRandomColor = () => {
-        const randPalette = Math.floor(Math.random() * allPalettes.length);
-        const randColor = Math.floor(
-            Math.random() * allPalettes[randPalette].colors.length,
-        );
-        return allPalettes[randPalette].colors[randColor];
     };
 
     const addRandomColor = () => {
