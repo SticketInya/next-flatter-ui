@@ -2,7 +2,7 @@
 @use '../../styles/breakpoints.module' as*;
 
 .appbar{
-    background-color: $background-nav--transparent;
+    background-color: $background-nav--transparent !important;
 
     div{
         font-family: 'Inter';
