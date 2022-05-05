@@ -4,14 +4,23 @@ import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import { AppBar } from '../../helpers/muiDrawerStyles';
 
+import styles from './NewPaletteNav.module.scss';
+import { useRouter } from 'next/router';
+
 interface props {
     open: boolean;
     handleDrawerToggle: () => void;
 }
 
 export default function NewPaletteNav({ open, handleDrawerToggle }: props) {
+    const router = useRouter();
+
+    const handleBack = () => {
+        router.back();
+    };
+
     return (
-        <AppBar position='fixed' open={open}>
+        <AppBar position='fixed' open={open} className={styles.appbar}>
             <Toolbar>
                 <IconButton
                     color='inherit'
@@ -22,9 +31,22 @@ export default function NewPaletteNav({ open, handleDrawerToggle }: props) {
                 >
                     <MenuIcon />
                 </IconButton>
-                <Typography variant='h6' noWrap component='div'>
-                    Persistent drawer
-                </Typography>
+                <div className={styles.content}>
+                    <Typography
+                        variant='h6'
+                        noWrap
+                        component='div'
+                        className={styles.title}
+                    >
+                        Create Your Palette
+                    </Typography>
+                    <div className={styles.btns}>
+                        <button className={styles.save}>Save</button>
+                        <button className={styles.back} onClick={handleBack}>
+                            Back
+                        </button>
+                    </div>
+                </div>
             </Toolbar>
         </AppBar>
     );
