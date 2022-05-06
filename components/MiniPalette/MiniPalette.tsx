@@ -14,7 +14,7 @@ export default function MiniPalette({
 
     const handleClick = () => {
         const path = router.asPath;
-        router.push(`${path}/palette/${id}`);
+        router.push(`/palette/${id}`);
     };
 
     return (
