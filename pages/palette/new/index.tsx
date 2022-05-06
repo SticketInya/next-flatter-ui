@@ -1,6 +1,5 @@
 import { NextPage } from 'next';
 import { FormEvent, useContext, useReducer } from 'react';
-import DndColorBox from '../../../components/DndColorBox/DndColorBox';
 import { ColorPalettesContext } from '../../../contexts/ColorPalettes.context';
 import NewPaletteDrawer from '../../../components/NewPaletteDrawer/NewPaletteDrawer';
 import NewPaletteNav from '../../../components/NewPaletteNav/NewPaletteNav';
@@ -9,8 +8,7 @@ import useFormInputState from '../../../hooks/useFormInputState';
 import NewPaletteDialog from '../../../components/NewPaletteDialog/NewPaletteDialog';
 import { useRouter } from 'next/router';
 import newPaletteReducer from '../../../reducers/newPalette.reducer';
-import { DndContext, DragEndEvent } from '@dnd-kit/core';
-import { arrayMove, SortableContext } from '@dnd-kit/sortable';
+import DndColorBoxList from '../../../components/DndColorboxList/DndColorboxList';
 
 //Material UI
 import Box from '@mui/material/Box';
@@ -32,7 +30,6 @@ const NewPalettePage: NextPage = () => {
     const [dialogOpen, toggleDialogOpen] = useToggleState(false);
     const [paletteName, updatePaletteName] = useFormInputState('');
     const isPaletteFull = palette.colors.length >= 20;
-    const allColors = palette.colors.map((color) => color.name);
 
     const addRandomColor = () => {
         let randomColor: color;
@@ -57,19 +54,6 @@ const NewPalettePage: NextPage = () => {
         router.push('/');
     };
 
-    const handleDragEnd = (e: DragEndEvent) => {
-        const { active, over } = e;
-
-        if (over !== null && active.id !== over.id) {
-            const oldIndex = allColors.indexOf(active.id);
-            const newIndex = allColors.indexOf(over.id);
-            dispatchPalette({
-                type: 'EDIT',
-                payload: arrayMove(palette.colors, oldIndex, newIndex),
-            });
-        }
-    };
-
     return (
         <div className={styles.root}>
             <div className={styles.ui}>
@@ -90,24 +74,10 @@ const NewPalettePage: NextPage = () => {
                     />
                     <Main open={drawerOpen}>
                         <DrawerHeader />
-                        <DndContext onDragEnd={handleDragEnd}>
-                            <SortableContext items={allColors}>
-                                <div className={styles.container}>
-                                    {palette.colors.map((color) => {
-                                        return (
-                                            <DndColorBox
-                                                key={color.name}
-                                                name={color.name}
-                                                color={color.color}
-                                                dispatchPalette={
-                                                    dispatchPalette
-                                                }
-                                            />
-                                        );
-                                    })}
-                                </div>
-                            </SortableContext>
-                        </DndContext>
+                        <DndColorBoxList
+                            palette={palette}
+                            dispatchPalette={dispatchPalette}
+                        />
                     </Main>
                 </Box>
             </div>
