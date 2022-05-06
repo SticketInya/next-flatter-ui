@@ -2,7 +2,7 @@ import { color } from './ColorPaletteInterface';
 
 export interface PaletteAction {
     type: string;
-    payload: color;
+    payload: color[];
 }
 
 export interface PaletteState {

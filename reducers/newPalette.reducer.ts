@@ -10,17 +10,20 @@ const newPaletteReducer = (state: PaletteState, action: PaletteAction) => {
         case 'ADD':
             return {
                 ...state,
-                colors: [...state.colors, payload],
+                colors: [...state.colors, payload[0]],
             };
         case 'REMOVE':
             return {
                 ...state,
                 colors: state.colors.filter(
-                    (color) => color.name !== payload.name,
+                    (color) => color.name !== payload[0].name,
                 ),
             };
         case 'CLEAR':
             return { ...state, colors: [] };
+
+        case 'EDIT':
+            return { ...state, colors: payload };
         default:
             return state;
     }
