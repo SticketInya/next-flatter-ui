@@ -14,6 +14,7 @@ type DefaultContextValue = {
     setAllPalettes: Dispatch<SetStateAction<ColorPalette[]>>;
     addColorPalette: (newPalette: ColorPalette) => void;
     getRandomColor: () => color;
+    removeColorPalette: (id: string) => void;
 };
 
 export const ColorPalettesContext = createContext<DefaultContextValue>({
@@ -21,6 +22,7 @@ export const ColorPalettesContext = createContext<DefaultContextValue>({
     setAllPalettes: () => {},
     addColorPalette: (newPalette: ColorPalette) => {},
     getRandomColor: () => defCol,
+    removeColorPalette: (id: string) => {},
 });
 
 export default function ColorPalettesProvider({ children }: props) {
@@ -31,6 +33,10 @@ export default function ColorPalettesProvider({ children }: props) {
 
     const addColorPalette = (newPalette: ColorPalette) => {
         setAllPalettes([...allPalettes, newPalette]);
+    };
+
+    const removeColorPalette = (id: string) => {
+        setAllPalettes(allPalettes.filter((palette) => palette.id !== id));
     };
 
     const getRandomColor = () => {
@@ -46,6 +52,7 @@ export default function ColorPalettesProvider({ children }: props) {
         setAllPalettes,
         addColorPalette,
         getRandomColor,
+        removeColorPalette,
     };
     return (
         <ColorPalettesContext.Provider value={value}>
