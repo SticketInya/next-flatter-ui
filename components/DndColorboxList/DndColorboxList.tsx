@@ -1,5 +1,6 @@
 import { DndContext, DragEndEvent } from '@dnd-kit/core';
 import { arrayMove, SortableContext } from '@dnd-kit/sortable';
+import { MouseSensor, TouchSensor, useSensor, useSensors } from '@dnd-kit/core';
 import { Dispatch } from 'react';
 import {
     PaletteState,
@@ -16,6 +17,20 @@ interface props {
 
 export default function DndColorBoxList({ palette, dispatchPalette }: props) {
     const allColors = palette.colors.map((color) => color.name);
+    const touchSensor = useSensor(TouchSensor, {
+        // Press delay of 250ms, with tolerance of 5px of movement
+        activationConstraint: {
+            delay: 250,
+            tolerance: 5,
+        },
+    });
+    const mouseSensor = useSensor(MouseSensor, {
+        // Require the mouse to move by 10 pixels before activating
+        activationConstraint: {
+            distance: 10,
+        },
+    });
+    const sensors = useSensors(touchSensor, mouseSensor);
 
     const handleDragEnd = (e: DragEndEvent) => {
         const { active, over } = e;
@@ -31,7 +46,7 @@ export default function DndColorBoxList({ palette, dispatchPalette }: props) {
     };
 
     return (
-        <DndContext onDragEnd={handleDragEnd}>
+        <DndContext sensors={sensors} onDragEnd={handleDragEnd}>
             <SortableContext items={allColors}>
                 <div className={styles.container}>
                     {palette.colors.map((color) => {
