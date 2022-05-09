@@ -1,7 +1,10 @@
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import useDidMountEffect from './useDidMountEffect';
 
-export default function useLocalStorageState(key: string, initialValue: any) {
+export default function useLocalStorageState<Type>(
+    key: string,
+    initialValue: Type,
+) {
     const [state, setState] = useState(initialValue);
 
     useDidMountEffect(() => {
