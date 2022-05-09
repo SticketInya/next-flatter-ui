@@ -2,6 +2,7 @@ import { useRouter } from 'next/router';
 import ColorPalette from '../../interfaces/ColorPaletteInterface';
 import { MouseEvent, useContext } from 'react';
 import { ColorPalettesContext } from '../../contexts/ColorPalettes.context';
+import { ColorPaletteReducerActionType } from '../../interfaces/ColorPaletteReducerInterface';
 
 //Material UI
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -16,7 +17,7 @@ export default function MiniPalette({
     palette: { paletteName, id, colors },
 }: props) {
     const router = useRouter();
-    const { removeColorPalette } = useContext(ColorPalettesContext);
+    const { dispatchAllPalettes } = useContext(ColorPalettesContext);
 
     const handleClick = () => {
         const path = router.asPath;
@@ -25,7 +26,10 @@ export default function MiniPalette({
 
     const handleRemove = (e: MouseEvent<HTMLDivElement>) => {
         e.stopPropagation();
-        removeColorPalette(id);
+        dispatchAllPalettes({
+            type: ColorPaletteReducerActionType.REMOVE_PALETTE,
+            payload: { id },
+        });
     };
 
     return (

@@ -17,10 +17,11 @@ import { Main, DrawerHeader } from '../../../helpers/muiDrawerStyles';
 import { CssBaseline } from '@mui/material';
 
 import styles from './NewPalettePage.module.scss';
+import { ColorPaletteReducerActionType } from '../../../interfaces/ColorPaletteReducerInterface';
 
 const NewPalettePage: NextPage = () => {
     const router = useRouter();
-    const { allPalettes, addColorPalette, getRandomColor } =
+    const { allPalettes, dispatchAllPalettes, getRandomColor } =
         useContext(ColorPalettesContext);
     const [palette, dispatchPalette] = useReducer(
         newPaletteReducer,
@@ -50,7 +51,10 @@ const NewPalettePage: NextPage = () => {
             id: paletteName.replace(/ /g, '-'),
             colors: palette.colors,
         };
-        addColorPalette(newPalette);
+        dispatchAllPalettes({
+            type: ColorPaletteReducerActionType.ADD_PALETTE,
+            payload: newPalette,
+        });
         router.push('/');
     };
 
