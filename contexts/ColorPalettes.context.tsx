@@ -1,7 +1,15 @@
-import { createContext, ReactNode, Dispatch, SetStateAction } from 'react';
+import {
+    createContext,
+    ReactNode,
+    Dispatch,
+    SetStateAction,
+    useReducer,
+} from 'react';
 import defaultPalettes from '../constants/defaultPalettes';
 import useLocalStorageState from '../hooks/useLocalStorageState';
 import ColorPalette, { color } from '../interfaces/ColorPaletteInterface';
+import { ColorPaletteReducerAction } from '../interfaces/ColorPaletteReducerInterface';
+import colorPaletteReducer from '../reducers/colorPalette.reducer';
 
 const defCol = { name: '', color: '' };
 
@@ -11,33 +19,21 @@ type props = {
 
 type DefaultContextValue = {
     allPalettes: ColorPalette[];
-    setAllPalettes: Dispatch<SetStateAction<ColorPalette[]>>;
-    addColorPalette: (newPalette: ColorPalette) => void;
+    dispatchAllPalettes: Dispatch<ColorPaletteReducerAction>;
     getRandomColor: () => color;
-    removeColorPalette: (id: string) => void;
 };
 
 export const ColorPalettesContext = createContext<DefaultContextValue>({
     allPalettes: [],
-    setAllPalettes: () => {},
-    addColorPalette: (newPalette: ColorPalette) => {},
+    dispatchAllPalettes: () => {},
     getRandomColor: () => defCol,
-    removeColorPalette: (id: string) => {},
 });
 
 export default function ColorPalettesProvider({ children }: props) {
-    const [allPalettes, setAllPalettes] = useLocalStorageState(
-        'colors',
+    const [allPalettes, dispatchAllPalettes] = useReducer(
+        colorPaletteReducer,
         defaultPalettes,
     );
-
-    const addColorPalette = (newPalette: ColorPalette) => {
-        setAllPalettes([...allPalettes, newPalette]);
-    };
-
-    const removeColorPalette = (id: string) => {
-        setAllPalettes(allPalettes.filter((palette) => palette.id !== id));
-    };
 
     const getRandomColor = () => {
         const randPalette = Math.floor(Math.random() * allPalettes.length);
@@ -49,10 +45,8 @@ export default function ColorPalettesProvider({ children }: props) {
 
     const value = {
         allPalettes,
-        setAllPalettes,
-        addColorPalette,
+        dispatchAllPalettes,
         getRandomColor,
-        removeColorPalette,
     };
     return (
         <ColorPalettesContext.Provider value={value}>
